@@ -31,6 +31,7 @@ app.get("/books/:id", async (req, res, next) => {
         const { rows } = await pool.query("SELECT * FROM books WHERE id = $1", [
             id,
         ]);
+
         if (rows.length === 0) {
             res.status(404).json({ error: "buku tidak ditemukan" });
         } else {
@@ -49,6 +50,7 @@ app.post("/books", async (req, res, next) => {
             "INSERT INTO books (published_year, is_available, title, author) VALUES ($1, $2, $3, $4) RETURNING *",
             [published_year, is_available, title, author]
         );
+
         res.status(201).json(rows[0]);
     } catch (err) {
         next(err);
@@ -64,6 +66,7 @@ app.put("/books/:id", async (req, res, next) => {
             "UPDATE books SET published_year = $1, is_available = $2, title = $3, author = $4 WHERE id = $5 RETURNING *",
             [published_year, is_available, title, author, id]
         );
+
         if (rows.length === 0) {
             res.status(404).json({ error: "buku tidak ditemukan" });
         } else {
@@ -82,6 +85,7 @@ app.delete("/books/:id", async (req, res, next) => {
             "DELETE FROM books WHERE id = $1 RETURNING *",
             [id]
         );
+
         if (rows.length === 0) {
             res.status(404).json({ error: "buku tidak ditemukan" });
         } else {
@@ -92,4 +96,6 @@ app.delete("/books/:id", async (req, res, next) => {
     }
 });
 
-app.listen(port, () => console.log(`server running on port ${port}`));
+app.listen(port, () => {
+    console.log(`server listening on port ${port}`);
+});
