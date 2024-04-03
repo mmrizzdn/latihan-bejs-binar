@@ -59,7 +59,7 @@ paths:
               in: path
               required: true
         get:
-            summary: get detail book
+            summary: get detailed book
             responses:
                 200:
                     description: success
