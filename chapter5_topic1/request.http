@@ -1,0 +1,20 @@
+### create a user
+POST http://localhost:4000/v1/books
+Content-Type: application/json
+
+{
+    "title":"pulang",
+    "author":"tere liye",
+    "publishedYear": 2016,
+    "isAvailable": true
+}
+
+### authorization
+POST http://localhost:4000/v1/books
+Authorization: Bearer
+
+### get all detail
+GET http://localhost:4000/v1/books
+
+### get book detail
+GET http://localhost:4000/v1/books/2

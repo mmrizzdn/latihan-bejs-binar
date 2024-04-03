@@ -1,0 +1,6 @@
+### Get all books
+GET http://localhost:3000/books
+
+### Get books details
+GET http://localhost:3000/books/6
+

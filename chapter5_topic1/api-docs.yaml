@@ -1,0 +1,139 @@
+openapi: 3.0.1
+info:
+    title: Book Store
+    description: api toko buku
+    version: 1.0.0
+    contact:
+        email: zoed.eldien15@gmail.com
+servers:
+    - url: http://localhost:4000/v1
+paths:
+    /books:
+        post:
+            summary: post new book
+            description: menambahkan buku ke dalam sistem
+            requestBody:
+                $ref: "#/components/requestBodies/Book"
+            responses:
+                201:
+                    description: success
+                    content:
+                        application/json:
+                            schema:
+                                allOf:
+                                    - $ref: "#/components/schemas/Book"
+            security:
+                - bearerAuth: []
+
+        get:
+            summary: get all books
+            parameters:
+                - schema:
+                      type: string
+                  name: search
+                  in: query
+            responses:
+                200:
+                    description: success
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    status:
+                                        type: boolean
+                                        example: true
+                                    message:
+                                        type: string
+                                        example: OK
+                                    data:
+                                        type: array
+                                        items:
+                                            allOf:
+                                                - $ref: "#/components/schemas/Book"
+    /books/{book_id}:
+        parameters:
+            - schema:
+                type: integer
+              name: book_id
+              in: path
+              required: true
+        get:
+            summary: get detail book
+            responses:
+                200:
+                    description: success
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    status:
+                                        type: boolean
+                                        example: true
+                                    message:
+                                        type: string
+                                        example: OK
+                                    data:
+                                        type: object
+                                        properties:
+                                            id:
+                                                type: integer
+                                                example: 10
+                                            title:
+                                                type: string
+                                                example: bumi
+                                            author:
+                                                type: string
+                                                example: tere liye
+                                            publishedYear:
+                                                type: integer
+                                                example: 2016
+                                            isAvailable:
+                                                type: boolean
+                                                example: true
+components:
+    securitySchemes:
+        bearerAuth:
+            type: http
+            scheme: bearer
+            bearerFormat: JWT
+    schemas:
+        Book:
+            title: Book
+            type: object
+            properties:
+                id:
+                    type: integer
+                    example: 10
+                title:
+                    type: string
+                    example: bumi
+                author:
+                    type: string
+                    example: tere liye
+                publishedYear:
+                    type: integer
+                    example: 2016
+                isAvailable:
+                    type: boolean
+                    example: true
+    requestBodies:
+        Book:
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            title:
+                                type: string
+                                example: bumi
+                            author:
+                                type: string
+                                example: tere liye
+                            publishedYear:
+                                type: integer
+                                example: 2016
+                            isAvailable:
+                                type: boolean
+                                example: true
